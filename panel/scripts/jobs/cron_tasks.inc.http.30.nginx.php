@@ -330,6 +330,32 @@ class nginx
 
 				$this->nginx_data[$vhost_filename].= $this->getVhostContent($domain, $ssl_vhost);
 				$this->nginx_data[$vhost_filename].= isset($this->needed_htpasswds[$domain[$ips_and_ports_index]]) ? $this->needed_htpasswds[$domain[$ips_and_ports_index]] . "\n" : '';
+
+
+				# Custom mail subdomain
+				$this->nginx_data[$vhost_filename] .= sprintf('
+				server {
+					listen       %s:%s;
+					server_name  mail.%s;
+					access_log   /var/log/nginx/access.log;
+					root         /usr/share/nginx/www/froxlor/roundcube;
+
+					location / {
+						index  index.php index.html index.htm;
+					}
+
+					location ~ \.php$ {
+						if (!-f $request_filename) {
+							return 404;
+						}
+						fastcgi_index index.php;
+						include /etc/nginx/fastcgi_params;
+						fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+						fastcgi_pass unix:/var/run/nginx/froxlor.panel-localhost-php-fpm.socket;
+					}
+				}
+				', $domain['ip'], $domain['port'], $domain['domain']);
+
 			}
 		}
 	}
