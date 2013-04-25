@@ -1,0 +1,7 @@
+# Vim
+*~
+*.swo
+*.swp
+
+# Roundcube
+panel/roundcube/logs
