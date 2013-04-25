@@ -168,6 +168,10 @@ class phpinterface_fpm
 			$fpm_config.= 'php_admin_value[session.save_path] = ' . makeCorrectDir($this->_settings['phpfpm']['tmpdir'] . '/' . $this->_domain['loginname'] . '/') . "\n";
 			$fpm_config.= 'php_admin_value[upload_tmp_dir] = ' . makeCorrectDir($this->_settings['phpfpm']['tmpdir'] . '/' . $this->_domain['loginname'] . '/') . "\n";
 
+			# Custom params
+			$fpm_config.= 'php_admin_value[display_errors] = On' . "\n";
+			$fpm_config.= 'php_admin_value[error_reporting] = E_ERROR' . "\n";
+
 			fwrite($fh, $fpm_config, strlen($fpm_config));
 			fclose($fh);
 		}
