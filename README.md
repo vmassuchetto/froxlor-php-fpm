@@ -9,7 +9,7 @@
     # Roundcube
     /usr/share/nginx/www/froxlor/roundcube
 
-# Comandos
+# Command line
 
-    # Gerar todos os arquivos de configuração:
+    # Generate all config files
     php -q /usr/share/nginx/www/froxlor/scripts/froxlor_master_cronjob.php --force
